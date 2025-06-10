@@ -91,7 +91,7 @@
                         <a href="#" class="text-red-400 hover:underline">Nom du Créateur</a>
                     </h4>
                     <p class="text-gray-300 text-sm mb-2">
-                        <?php echo $monster['description']; ?>
+                        <?php echo Core\Helpers\truncate($monster['description']); ?>
                     </p>
                     <div class="flex justify-between items-center mb-2">
                         <div>
