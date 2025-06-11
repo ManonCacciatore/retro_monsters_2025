@@ -19,3 +19,15 @@ function homeAction(PDO $connexion)
     include '../app/views/pages/home.php';
     $content = ob_get_clean();
 }
+
+
+function formAction(PDO $connexion)
+{
+    global $content, $title;
+
+    $title = 'FormPage';
+
+    ob_start();
+    include '../app/views/pages/form.php';
+    $content = ob_get_clean();
+}

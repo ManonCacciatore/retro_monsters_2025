@@ -24,7 +24,7 @@
             href="?monsters">Monstres</a>
           <a
             class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700 active"
-            href="#">Ajouter un monstre</a>
+            href="?form">Ajouter un monstre</a>
           <!-- <a
             class="text-gray-300 hover:text-white px-3 py-2 hover:bg-gray-700"
             href="#"
