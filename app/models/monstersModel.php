@@ -27,3 +27,16 @@ function findAll(PDO $connexion, int $limit = 3): array
     $rs->execute();
     return $rs->fetchAll(PDO::FETCH_ASSOC);
 }
+
+
+function findOneById(PDO $connexion, string $id)
+{
+    $sql = "SELECT monsters.*, monster_types.name AS type_name
+            FROM monsters
+            JOIN monster_types ON monsters.type_id = monster_types.id
+            WHERE monsters.id = :id;";
+    $rs = $connexion->prepare($sql);
+    $rs->bindValue(':id', $id, PDO::PARAM_STR);
+    $rs->execute();
+    return $rs->fetch(PDO::FETCH_ASSOC);
+}

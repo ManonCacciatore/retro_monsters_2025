@@ -18,3 +18,16 @@ function indexAction(PDO $connexion)
     include '../app/views/monsters/index.php';
     $content = ob_get_clean();
 }
+
+
+function showAction(PDO $connexion, string $id)
+{
+    include '../app/models/monstersModel.php';
+    $monster = \App\Models\MonstersModel\findOneById($connexion, $id);
+
+    global $content, $title;
+    $title = $monster['name'];
+    ob_start();
+    include '../app/views/monsters/show.php';
+    $content = ob_get_clean();
+}

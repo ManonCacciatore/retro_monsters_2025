@@ -1,8 +1,7 @@
 <?php
 
 if (isset($_GET['monsters'])) :
-    include_once '../app/controllers/monstersController.php';
-    \App\Controllers\MonstersController\indexAction($connexion);
+    include_once '../app/routers/monsters.php';
 
 // ROUTER par défaut
 
