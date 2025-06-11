@@ -1,6 +1,11 @@
 <?php
 
-// ROUTER principal
+if (isset($_GET['monsters'])) :
+    include_once '../app/controllers/monstersController.php';
+    \App\Controllers\MonstersController\indexAction($connexion);
 
-include_once '../app/controllers/pagesController.php';
-\App\Controllers\PagesController\homeAction($connexion);
+// ROUTER par défaut
+else:
+    include_once '../app/controllers/pagesController.php';
+    \App\Controllers\PagesController\homeAction($connexion);
+endif;
