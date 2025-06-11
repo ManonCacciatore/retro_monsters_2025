@@ -25,23 +25,9 @@
                 <h2 class="font-bold text-lg mb-4">Filtrer par Critères</h2>
 
                 <!-- Type -->
-                <select name="type" class="w-full p-2 mb-4 bg-gray-800 rounded">
-                    <option value="" disabled selected>Choisir un type</option>
-                    <option value="aquatique">Aquatique</option>
-                    <option value="terrestre">Terrestre</option>
-                    <option value="volant">Volant</option>
-                    <option value="cosmique">Cosmique</option>
-                    <option value="spectral">Spectral</option>
-                </select>
-
+                <?php include '../app/views/categories/_types.php'; ?>
                 <!-- Rareté -->
-                <select name="rarete" class="w-full p-2 mb-4 bg-gray-800 rounded">
-                    <option value="" disabled selected>Choisir une rareté</option>
-                    <option value="commun">Commun</option>
-                    <option value="rare">Rare</option>
-                    <option value="epique">Épique</option>
-                    <option value="legendaire">Légendaire</option>
-                </select>
+                <?php include '../app/views/categories/_rareties.php'; ?>
 
                 <!-- PV -->
                 <div class="bg-gray-700 rounded-lg shadow-lg p-4 mb-4">
