@@ -4,7 +4,7 @@
       <nav
         class="container mx-auto px-4 py-4 mb-16 flex justify-between items-center">
         <div class="flex items-center">
-          <a href="#">
+          <a href="?">
             <img
               src="images/Logo_RetroMonsters.png"
               alt="RetroMonsters Logo"
