@@ -9,7 +9,7 @@ function homeAction(PDO $connexion)
     // Demander des données au modèle
     include_once '../app/models/monstersModel.php';
     $randomMonster = \App\Models\MonstersModel\findOne($connexion);
-    $monsters = \App\Models\MonstersModel\findAll($connexion, 3);
+    $monsters = \App\Models\MonstersModel\findAll($connexion, 3, 0, null, null);
 
     // Charger la vue "home" dans $content
 

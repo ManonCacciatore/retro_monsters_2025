@@ -4,13 +4,21 @@
     </h2>
     <?php include '../app/views/monsters/_index.php' ?>
 </section>
-<div class="flex justify-center mt-8">
-    <nav class="flex space-x-2">
-        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-            <a href="?monsters=index&page=<?php echo $i; ?>"
-                class="px-4 py-2 rounded <?php echo ($i == $page) ? 'bg-red-600 text-white' : 'bg-gray-300 text-gray-700'; ?>">
-                <?php echo $i; ?>
+<?php if ($totalPages > 1): ?>
+    <div class="flex justify-center gap-2 mt-6">
+        <?php
+        $queryParams = [];
+        if (!empty($_GET['type'])) $queryParams['type'] = $_GET['type'];
+        if (!empty($_GET['rarete'])) $queryParams['rarete'] = $_GET['rarete'];
+
+        for ($i = 1; $i <= $totalPages; $i++):
+            $queryParams['page'] = $i;
+            $url = 'index.php?monsters=index&' . http_build_query($queryParams);
+        ?>
+            <a href="<?= $url ?>"
+                class="px-3 py-1 rounded <?= ($i == $page) ? 'bg-red-500 text-white' : 'bg-gray-300' ?>">
+                <?= $i ?>
             </a>
         <?php endfor; ?>
-    </nav>
-</div>
+    </div>
+<?php endif; ?>

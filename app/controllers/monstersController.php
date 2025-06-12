@@ -8,23 +8,23 @@ function indexAction(PDO $connexion)
 {
     include_once '../app/models/monstersModel.php';
 
+    // Récupération des filtres
+    $type = $_GET['type'] ?? null;
+    $rarete = $_GET['rarete'] ?? null;
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = 9;
-    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
     $offset = ($page - 1) * $limit;
 
-    $monsters = \App\Models\MonstersModel\findAll($connexion, $limit, $offset);
-    $totalMonsters = \App\Models\MonstersModel\countAll($connexion);
-    $totalPages = ceil($totalMonsters / $limit);
+    // Données filtrées
+    $monsters = \App\Models\MonstersModel\findAll($connexion, $limit, $offset, $type, $rarete);
+    $total = \App\Models\MonstersModel\countAll($connexion, $type, $rarete);
+    $totalPages = ceil($total / $limit);
 
+    // Pour la vue
     global $content, $title;
     $title = 'Catalogue';
 
     ob_start();
-    extract([
-        'monsters' => $monsters,
-        'page' => $page,
-        'totalPages' => $totalPages,
-    ]);
     include '../app/views/monsters/index.php';
     $content = ob_get_clean();
 }

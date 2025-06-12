@@ -14,27 +14,67 @@ function findOne(PDO $connexion)
     return $connexion->query($sql)->fetch(PDO::FETCH_ASSOC);
 }
 
-function findAll(PDO $connexion, int $limit = 9, int $offset = 0): array
+function findAll(PDO $connexion, int $limit = 9, int $offset = 0, ?string $type = null, ?string $rarete = null): array
 {
-    $sql = "SELECT monsters.*, monster_types.name AS type_name
+    $sql = "SELECT monsters.*, monster_types.name AS type_name, rareties.name AS rarety_name
             FROM monsters
             JOIN monster_types ON monsters.type_id = monster_types.id
-            ORDER BY monsters.created_at DESC
-            LIMIT :limit OFFSET :offset;";
+            JOIN rareties ON monsters.rarety_id = rareties.id
+            WHERE 1=1";
 
-    $rs = $connexion->prepare($sql);
-    $rs->bindValue(':limit', $limit, PDO::PARAM_INT);
-    $rs->bindValue(':offset', $offset, PDO::PARAM_INT);
-    $rs->execute();
+    if ($type !== null) {
+        $sql .= " AND monster_types.name = :type";
+    }
 
-    return $rs->fetchAll(PDO::FETCH_ASSOC);
+    if ($rarete !== null) {
+        $sql .= " AND rareties.name = :rarete";
+    }
+
+    $sql .= " ORDER BY monsters.created_at DESC
+              LIMIT :limit OFFSET :offset";
+
+    $stmt = $connexion->prepare($sql);
+
+    if ($type !== null) {
+        $stmt->bindValue(':type', $type, PDO::PARAM_STR);
+    }
+
+    if ($rarete !== null) {
+        $stmt->bindValue(':rarete', $rarete, PDO::PARAM_STR);
+    }
+
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function countAll(PDO $connexion): int
+
+function countAll(PDO $connexion, ?string $type, ?string $rarete)
 {
-    $sql = "SELECT COUNT(*) FROM monsters;";
-    $rs = $connexion->query($sql);
-    return (int) $rs->fetchColumn();
+    $sql = "SELECT COUNT(*) as total
+            FROM monsters m
+            LEFT JOIN monster_types mt ON m.type_id = mt.id
+            LEFT JOIN rareties r ON m.rarety_id = r.id
+            WHERE 1=1";
+
+    $params = [];
+
+    if ($type) {
+        $sql .= " AND mt.name = :type";
+        $params[':type'] = $type;
+    }
+
+    if ($rarete) {
+        $sql .= " AND r.name = :rarete";
+        $params[':rarete'] = $rarete;
+    }
+
+    $stmt = $connexion->prepare($sql);
+    $stmt->execute($params);
+    return (int) $stmt->fetchColumn();
 }
 
 

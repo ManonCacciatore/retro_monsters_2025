@@ -1,9 +1,10 @@
         <aside class="w-full md:w-1/4 p-4">
             <!-- Formulaire de Recherche Full Texte -->
             <form
-                action="/recherche-texte"
+                action="index.php"
                 method="GET"
                 class="bg-gray-700 rounded-lg shadow-lg p-4 mb-6">
+                <input type="hidden" name="monsters" value="index">
                 <h2 class="font-bold text-lg mb-4">Recherche</h2>
                 <input
                     type="text"
@@ -19,9 +20,10 @@
 
             <!-- Formulaire de Recherche par Critères -->
             <form
-                action="/recherche-criteres"
+                action="index.php"
                 method="GET"
                 class="bg-gray-700 rounded-lg shadow-lg p-4">
+                <input type="hidden" name="monsters" value="index">
                 <h2 class="font-bold text-lg mb-4">Filtrer par Critères</h2>
 
                 <!-- Type -->
