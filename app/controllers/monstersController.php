@@ -6,15 +6,25 @@ use \PDO;
 
 function indexAction(PDO $connexion)
 {
-    // Demander des données au modèle
     include_once '../app/models/monstersModel.php';
-    $monsters = \App\Models\MonstersModel\findAll($connexion, 9);
 
-    // Charger la vue "home" dans $content
+    $limit = 9;
+    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+    $offset = ($page - 1) * $limit;
+
+    $monsters = \App\Models\MonstersModel\findAll($connexion, $limit, $offset);
+    $totalMonsters = \App\Models\MonstersModel\countAll($connexion);
+    $totalPages = ceil($totalMonsters / $limit);
 
     global $content, $title;
     $title = 'Catalogue';
+
     ob_start();
+    extract([
+        'monsters' => $monsters,
+        'page' => $page,
+        'totalPages' => $totalPages,
+    ]);
     include '../app/views/monsters/index.php';
     $content = ob_get_clean();
 }
